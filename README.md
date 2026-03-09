@@ -92,21 +92,6 @@ A practical reference to keep open in a browser tab while writing your README fi
 
 VS Code includes built-in Markdown support. Open a preview with **Ctrl+Shift+V** or split the editor with **Ctrl+K V** to see your rendered output alongside your code. The following extensions add extra functionality.
 
-### Video: New and Improved Markdown Experience in Visual Studio Code
-
-https://youtu.be/091NLL4M4Gk
-
-This tutorial from the Visual Studio team walks through the free **Markdown Editor v2** extension for VS Code. Presenter Mads covers the key features you will use day to day:
-
-- Getting started with the extension and the improved editing environment
-- Keyboard shortcuts for common formatting tasks such as headings, bold, and italic
-- Inserting images directly from your clipboard, which saves time when documenting projects with screenshots
-- IntelliSense support, which suggests Markdown syntax as you type and reduces errors
-- Generating a table of contents automatically from your headings
-- Additional productivity features built into the extension
-
-If you are using VS Code to write your README files, watch this video before installing any other extensions — it covers most of what you need in a single, practical walkthrough.
-
 ### Recommended Extensions
 
 **Markdown Editor v2** (free)
