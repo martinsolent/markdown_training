@@ -43,7 +43,3 @@ README.md              — this file
 ## Intended Audience
 
 First-year computing students who are new to GitHub and need a practical introduction to writing README files using Markdown.
-
-## Author
-
-[Your Name](https://github.com/your-username)
