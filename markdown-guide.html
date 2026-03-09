@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Markdown for GitHub READMEs</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #f78166;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --tag-bg: #1f2937;
+    --code-bg: #1c2128;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(88,166,255,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .header-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent2);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  header h1 {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  header h1 span { color: var(--accent); }
+
+  header p {
+    margin-top: 0.75rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* LAYOUT */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  /* INTRO */
+  .intro-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+
+  .intro-box strong { color: var(--text); }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 3rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    background: rgba(88,166,255,0.1);
+    border: 1px solid rgba(88,166,255,0.25);
+    border-radius: 4px;
+    padding: 0.15rem 0.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* CODE CARD */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .card-label {
+    background: var(--code-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0.45rem 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-label .dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent2);
+    margin-right: 0.4rem;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 600px) {
+    .split { grid-template-columns: 1fr; }
+  }
+
+  .split-pane {
+    padding: 1rem 1.25rem;
+  }
+
+  .split-pane:first-child {
+    border-right: 1px solid var(--border);
+  }
+
+  .split-pane .pane-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.6rem;
+  }
+
+  pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: #a8b5cc;
+    white-space: pre-wrap;
+    line-height: 1.7;
+  }
+
+  .md-sym { color: var(--accent3); }
+  .md-link { color: var(--accent); }
+  .md-em { color: var(--accent2); }
+  .md-str { color: #e3b341; }
+
+  .preview {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .preview h1 { font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: 0.2rem; }
+  .preview h2 { font-size: 1.1rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+  .preview h3 { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+  .preview strong { color: var(--text); font-weight: 700; }
+  .preview em { font-style: italic; color: #b9c4d6; }
+  .preview code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.1rem 0.35rem;
+    color: var(--accent2);
+  }
+
+  .preview pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 0.8rem 1rem;
+    font-size: 0.78rem;
+    color: #a8b5cc;
+    margin-top: 0.3rem;
+  }
+
+  .preview a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(88,166,255,0.3); }
+
+  .preview ul { padding-left: 1.2rem; }
+  .preview ol { padding-left: 1.2rem; }
+  .preview li { margin-bottom: 0.2rem; }
+
+  .preview hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0.6rem 0;
+  }
+
+  .preview blockquote {
+    border-left: 3px solid var(--accent);
+    padding-left: 0.8rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .preview table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+
+  .preview th {
+    background: var(--code-bg);
+    padding: 0.4rem 0.75rem;
+    text-align: left;
+    border: 1px solid var(--border);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .preview td {
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border);
+    font-size: 0.8rem;
+  }
+
+  /* TIP */
+  .tip {
+    background: rgba(63,185,80,0.07);
+    border: 1px solid rgba(63,185,80,0.2);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.87rem;
+    color: #8dd89e;
+    margin-top: 0.75rem;
+  }
+
+  .tip strong { color: var(--accent2); }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--tag-bg);
+    color: var(--muted);
+    margin-bottom: 1rem;
+    margin-right: 0.3rem;
+  }
+
+  /* TEMPLATE */
+  .template-box {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .template-box pre {
+    font-size: 0.8rem;
+    color: #a8b5cc;
+    white-space: pre-wrap;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-label">&#9632; First-Year Computing — GitHub Skills</div>
+  <h1>Markdown for<br><span>GitHub READMEs</span></h1>
+  <p>A practical guide to writing README files that make your projects easy to read and professional to share.</p>
+</header>
+
+<div class="container">
+
+  <div class="intro-box">
+    <strong>What is Markdown?</strong> Markdown is a lightweight way to format plain text. You write simple symbols, and GitHub converts them into headings, bold text, lists, and more. A <strong>README.md</strong> file in your repository is the first thing people see when they visit your project. <a href="resources.html" style="color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(88,166,255,0.35);">Further reading and resources →</a>
+  </div>
+
+  <!-- SECTION 1: HEADINGS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Headings</h2>
+    </div>
+    <div class="card">
+      <div class="card-label"><span><span class="dot"></span>markdown</span><span>→ preview</span></div>
+      <div class="split">
+        <div class="split-pane">
+          <div class="pane-title">You write</div>
+          <pre><span class="md-sym">#</span> My Project Title
+<span class="md-sym">##</span> Overview
+<span class="md-sym">###</span> Installation Steps</pre>
+        </div>
+        <div class="split-pane">
+          <div class="pane-title">GitHub shows</div>
+          <div class="preview">
+            <h1>My Project Title</h1>
+            <h2>Overview</h2>
+            <h3>Installation Steps</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tip"><strong>Rule:</strong> Use <code>#</code> once — for the project title only. Use <code>##</code> for main sections. Use <code>###</code> for sub-sections.</div>
+  </div>
+
+  <!-- SECTION 2: TEXT FORMATTING -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Text Formatting</h2>
+    </div>
+    <div class="card">
+      <div class="card-label"><span><span class="dot"></span>markdown</span><span>→ preview</span></div>
+      <div class="split">
+        <div class="split-pane">
+          <div class="pane-title">You write</div>
+          <pre><span class="md-sym">**</span>bold text<span class="md-sym">**</span>
+<span class="md-sym">*</span>italic text<span class="md-sym">*</span>
+<span class="md-sym">~~</span>strikethrough<span class="md-sym">~~</span>
+<span class="md-sym">`</span>inline code<span class="md-sym">`</span></pre>
+        </div>
+        <div class="split-pane">
+          <div class="pane-title">GitHub shows</div>
+          <div class="preview">
+            <p><strong>bold text</strong></p>
+            <p><em>italic text</em></p>
+            <p><s>strikethrough</s></p>
+            <p><code>inline code</code></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: LISTS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Lists</h2>
+    </div>
+    <div class="card">
+      <div class="card-label"><span><span class="dot"></span>markdown</span><span>→ preview</span></div>
+      <div class="split">
+        <div class="split-pane">
+          <div class="pane-title">You write</div>
+          <pre><span class="md-sym">-</span> Unordered item
+<span class="md-sym">-</span> Another item
+  <span class="md-sym">-</span> Nested item
+
+<span class="md-sym">1.</span> First step
+<span class="md-sym">2.</span> Second step
+<span class="md-sym">3.</span> Third step</pre>
+        </div>
+        <div class="split-pane">
+          <div class="pane-title">GitHub shows</div>
+          <div class="preview">
+            <ul>
+              <li>Unordered item</li>
+              <li>Another item
+                <ul><li>Nested item</li></ul>
+              </li>
+            </ul>
+            <br>
+            <ol>
+              <li>First step</li>
+              <li>Second step</li>
+              <li>Third step</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tip"><strong>Tip:</strong> Use numbered lists for steps that must happen in order (like installation). Use bullet points for features or options.</div>
+  </div>
+
+  <!-- SECTION 4: CODE BLOCKS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Code Blocks</h2>
+    </div>
+    <div class="card">
+      <div class="card-label"><span><span class="dot"></span>markdown</span><span>→ preview</span></div>
+      <div class="split">
+        <div class="split-pane">
+          <div class="pane-title">You write</div>
+          <pre><span class="md-sym">```</span><span class="md-em">python</span>
+def greet(name):
+    print(f"Hello, {name}")
+<span class="md-sym">```</span>
+
+<span class="md-sym">```</span><span class="md-em">bash</span>
+pip install requests
+<span class="md-sym">```</span></pre>
+        </div>
+        <div class="split-pane">
+          <div class="pane-title">GitHub shows</div>
+          <div class="preview">
+            <pre>def greet(name):
+    print(f"Hello, {name}")</pre>
+            <pre>pip install requests</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tip"><strong>Tip:</strong> Always add the language name after the opening backticks. GitHub uses it to colour the syntax. Common options: <code>python</code>, <code>bash</code>, <code>javascript</code>, <code>html</code>, <code>css</code>.</div>
+  </div>
+
+  <!-- SECTION 5: LINKS & IMAGES -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Links and Images</h2>
+    </div>
+    <div class="card">
+      <div class="card-label"><span><span class="dot"></span>markdown</span><span>→ preview</span></div>
+      <div class="split">
+        <div class="split-pane">
+          <div class="pane-title">You write</div>
+          <pre><span class="md-sym">[</span><span class="md-link">Link text</span><span class="md-sym">](</span><span class="md-str">https://github.com</span><span class="md-sym">)</span>
+
+<span class="md-sym">![</span><span class="md-link">Alt text</span><span class="md-sym">](</span><span class="md-str">screenshot.png</span><span class="md-sym">)</span></pre>
+        </div>
+        <div class="split-pane">
+          <div class="pane-title">GitHub shows</div>
+          <div class="preview">
+            <p><a href="#">Link text</a></p>
+            <br>
+            <p style="color:var(--muted); font-size:0.8rem;">→ An image renders here from the file path or URL you provide.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tip"><strong>Pattern to remember:</strong> Links use <code>[text](url)</code>. Images are the same but start with <code>!</code> — the alt text describes the image for screen readers.</div>
+  </div>
+
+  <!-- SECTION 6: TABLES -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Tables</h2>
+    </div>
+    <div class="card">
+      <div class="card-label"><span><span class="dot"></span>markdown</span><span>→ preview</span></div>
+      <div class="split">
+        <div class="split-pane">
+          <div class="pane-title">You write</div>
+          <pre><span class="md-sym">|</span> Feature   <span class="md-sym">|</span> Status  <span class="md-sym">|</span>
+<span class="md-sym">|</span>--------<span class="md-sym">|</span>--------<span class="md-sym">|</span>
+<span class="md-sym">|</span> Login     <span class="md-sym">|</span> Done    <span class="md-sym">|</span>
+<span class="md-sym">|</span> Register  <span class="md-sym">|</span> Done    <span class="md-sym">|</span>
+<span class="md-sym">|</span> Dashboard <span class="md-sym">|</span> In progress <span class="md-sym">|</span></pre>
+        </div>
+        <div class="split-pane">
+          <div class="pane-title">GitHub shows</div>
+          <div class="preview">
+            <table>
+              <tr><th>Feature</th><th>Status</th></tr>
+              <tr><td>Login</td><td>Done</td></tr>
+              <tr><td>Register</td><td>Done</td></tr>
+              <tr><td>Dashboard</td><td>In progress</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: BLOCKQUOTES & HR -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Blockquotes and Horizontal Rules</h2>
+    </div>
+    <div class="card">
+      <div class="card-label"><span><span class="dot"></span>markdown</span><span>→ preview</span></div>
+      <div class="split">
+        <div class="split-pane">
+          <div class="pane-title">You write</div>
+          <pre><span class="md-sym">></span> This project was built
+<span class="md-sym">></span> as part of COM101.
+
+<span class="md-sym">---</span></pre>
+        </div>
+        <div class="split-pane">
+          <div class="pane-title">GitHub shows</div>
+          <div class="preview">
+            <blockquote>This project was built as part of COM101.</blockquote>
+            <br>
+            <hr>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: TEMPLATE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Starter README Template</h2>
+    </div>
+    <p style="color:var(--muted); font-size:0.9rem; margin-bottom:1rem;">Copy this into your <code>README.md</code> file and fill in your own details.</p>
+    <div class="template-box">
+<pre><span class="md-sym">#</span> <span class="md-str">Project Name</span>
+
+A one-sentence description of what your project does.
+
+<span class="md-sym">##</span> Overview
+
+Explain the purpose of the project. What problem does it solve?
+Who is it for?
+
+<span class="md-sym">##</span> Features
+
+<span class="md-sym">-</span> Feature one
+<span class="md-sym">-</span> Feature two
+<span class="md-sym">-</span> Feature three
+
+<span class="md-sym">##</span> How to Run
+
+<span class="md-sym">1.</span> Clone the repository:
+
+<span class="md-sym">```</span><span class="md-em">bash</span>
+git clone https://github.com/your-username/your-repo.git
+<span class="md-sym">```</span>
+
+<span class="md-sym">2.</span> Install dependencies:
+
+<span class="md-sym">```</span><span class="md-em">bash</span>
+pip install -r requirements.txt
+<span class="md-sym">```</span>
+
+<span class="md-sym">3.</span> Run the program:
+
+<span class="md-sym">```</span><span class="md-em">bash</span>
+python main.py
+<span class="md-sym">```</span>
+
+<span class="md-sym">##</span> Technologies Used
+
+<span class="md-sym">|</span> Technology <span class="md-sym">|</span> Purpose          <span class="md-sym">|</span>
+<span class="md-sym">|</span>-----------<span class="md-sym">|</span>------------------<span class="md-sym">|</span>
+<span class="md-sym">|</span> Python     <span class="md-sym">|</span> Core logic        <span class="md-sym">|</span>
+<span class="md-sym">|</span> Flask      <span class="md-sym">|</span> Web framework     <span class="md-sym">|</span>
+
+<span class="md-sym">##</span> Author
+
+<span class="md-sym">[</span><span class="md-link">Your Name</span><span class="md-sym">](</span><span class="md-str">https://github.com/your-username</span><span class="md-sym">)</span></pre>
+    </div>
+
+    <!-- Button row -->
+    <div style="display:flex; gap:0.6rem; margin-top:0.75rem; flex-wrap:wrap;">
+      <button id="tmpl-copy-btn" onclick="copyTemplate()" style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; background:rgba(88,166,255,0.1); border:1px solid rgba(88,166,255,0.3); color:var(--accent); border-radius:5px; padding:0.5rem 1rem; cursor:pointer; transition:background 0.2s;">⎘ Copy template</button>
+      <button id="tmpl-preview-btn" onclick="toggleTemplatePreview()" style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; background:rgba(63,185,80,0.1); border:1px solid rgba(63,185,80,0.3); color:var(--accent2); border-radius:5px; padding:0.5rem 1rem; cursor:pointer; transition:background 0.2s;">▶ Show preview</button>
+    </div>
+
+    <!-- Rendered preview (hidden by default) -->
+    <div id="tmpl-preview" style="display:none; margin-top:0.75rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:1.5rem 1.75rem;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1.25rem; padding-bottom:0.6rem; border-bottom:1px solid var(--border);">GitHub preview</div>
+      <div class="preview">
+        <h1>Project Name</h1>
+        <p style="margin:0.5rem 0 1rem;">A one-sentence description of what your project does.</p>
+        <h2>Overview</h2>
+        <p style="margin:0.5rem 0 1rem;">Explain the purpose of the project. What problem does it solve? Who is it for?</p>
+        <h2>Features</h2>
+        <ul style="margin:0.5rem 0 1rem;">
+          <li>Feature one</li>
+          <li>Feature two</li>
+          <li>Feature three</li>
+        </ul>
+        <h2>How to Run</h2>
+        <ol style="margin:0.5rem 0 0.5rem;">
+          <li style="margin-bottom:0.6rem;">Clone the repository:<pre style="margin-top:0.4rem;">git clone https://github.com/your-username/your-repo.git</pre></li>
+          <li style="margin-bottom:0.6rem;">Install dependencies:<pre style="margin-top:0.4rem;">pip install -r requirements.txt</pre></li>
+          <li style="margin-bottom:0.6rem;">Run the program:<pre style="margin-top:0.4rem;">python main.py</pre></li>
+        </ol>
+        <h2 style="margin-top:1rem;">Technologies Used</h2>
+        <table style="margin:0.5rem 0 1rem;">
+          <tr><th>Technology</th><th>Purpose</th></tr>
+          <tr><td>Python</td><td>Core logic</td></tr>
+          <tr><td>Flask</td><td>Web framework</td></tr>
+        </table>
+        <h2>Author</h2>
+        <p style="margin-top:0.5rem;"><a href="#">Your Name</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK REFERENCE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Quick Reference</h2>
+    </div>
+    <div class="card">
+      <div style="padding: 1.2rem 1.5rem;">
+        <div class="preview">
+          <table>
+            <tr><th>What you want</th><th>What you type</th></tr>
+            <tr><td>Main heading</td><td><code># Title</code></td></tr>
+            <tr><td>Section heading</td><td><code>## Section</code></td></tr>
+            <tr><td>Bold</td><td><code>**text**</code></td></tr>
+            <tr><td>Italic</td><td><code>*text*</code></td></tr>
+            <tr><td>Inline code</td><td><code>`code`</code></td></tr>
+            <tr><td>Code block</td><td><code>```python ... ```</code></td></tr>
+            <tr><td>Bullet list</td><td><code>- item</code></td></tr>
+            <tr><td>Numbered list</td><td><code>1. item</code></td></tr>
+            <tr><td>Link</td><td><code>[text](url)</code></td></tr>
+            <tr><td>Image</td><td><code>![alt](path)</code></td></tr>
+            <tr><td>Horizontal rule</td><td><code>---</code></td></tr>
+            <tr><td>Blockquote</td><td><code>> text</code></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRACTICE SECTION -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Practice Exercises</h2>
+    </div>
+    <p style="color:var(--muted); font-size:0.9rem; margin-bottom:0.6rem;">Type the correct Markdown into each field. Press <strong style="color:var(--text)">Check</strong> to see if you got it right.</p>
+    <p style="background:rgba(247,129,102,0.07); border:1px solid rgba(247,129,102,0.25); border-radius:6px; padding:0.7rem 1rem; font-size:0.84rem; color:#f0a898; margin-bottom:1.5rem;">⚠ Answers are <strong>case sensitive</strong>. Type text exactly as shown in <strong>bold</strong> in each question.</p>
+
+    <div id="exercises"></div>
+
+    <div id="score-bar" style="display:none; margin-top:2rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:1.25rem 1.5rem; text-align:center;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--muted); margin-bottom:0.4rem;">SCORE</div>
+      <div id="score-text" style="font-size:1.5rem; font-weight:800; color:var(--accent2);"></div>
+      <div id="score-msg" style="font-size:0.85rem; color:var(--muted); margin-top:0.3rem;"></div>
+      <button onclick="resetAll()" style="margin-top:1rem; font-family:'JetBrains Mono',monospace; font-size:0.72rem; background:transparent; border:1px solid var(--border); color:var(--muted); border-radius:4px; padding:0.4rem 1rem; cursor:pointer;">↺ Try again</button>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Markdown Guide &nbsp;·&nbsp; GitHub READMEs &nbsp;·&nbsp; First-Year Computing
+</footer>
+
+<style>
+  .ex-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .ex-prompt {
+    font-size: 0.88rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .ex-hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+  .ex-row {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .ex-input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    padding: 0.5rem 0.75rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .ex-input:focus { border-color: var(--accent); }
+  .ex-input.correct { border-color: var(--accent2); background: rgba(63,185,80,0.06); }
+  .ex-input.wrong { border-color: var(--accent3); background: rgba(247,129,102,0.06); }
+  .ex-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    background: rgba(88,166,255,0.1);
+    border: 1px solid rgba(88,166,255,0.3);
+    color: var(--accent);
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .ex-btn:hover { background: rgba(88,166,255,0.18); }
+  .ex-btn:disabled { opacity: 0.4; cursor: default; }
+  .ex-feedback {
+    margin-top: 0.6rem;
+    font-size: 0.82rem;
+    min-height: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .ex-feedback.correct { color: var(--accent2); }
+  .ex-feedback.wrong { color: var(--accent3); }
+  .ex-reveal {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.15rem 0.5rem;
+    margin-left: 0.3rem;
+  }
+  .ex-textarea {
+    width: 100%;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    padding: 0.6rem 0.75rem;
+    outline: none;
+    resize: vertical;
+    line-height: 1.6;
+    transition: border-color 0.2s;
+  }
+  .ex-textarea:focus { border-color: var(--accent); }
+  .ex-textarea.correct { border-color: var(--accent2); background: rgba(63,185,80,0.06); }
+  .ex-textarea.wrong { border-color: var(--accent3); background: rgba(247,129,102,0.06); }
+  .check-all-btn {
+    display: block;
+    width: 100%;
+    margin-top: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    background: rgba(63,185,80,0.1);
+    border: 1px solid rgba(63,185,80,0.3);
+    color: var(--accent2);
+    border-radius: 6px;
+    padding: 0.7rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .check-all-btn:hover { background: rgba(63,185,80,0.18); }
+</style>
+
+<script>
+const exercises = [
+  {
+    prompt: "Write the Markdown for a top-level heading that says: <strong># My Project</strong>",
+    hint: "Hint: use # followed by a space",
+    type: "input",
+    answers: ["# My Project"],
+    correct_msg: "Correct — # with a space before the text creates an h1 heading.",
+    wrong_msg: "Not quite.",
+    reveal: "# My Project"
+  },
+  {
+    prompt: "Make the word <strong>important</strong> appear in bold. Type the full Markdown for it.",
+    hint: "Hint: wrap the word in double asterisks",
+    type: "input",
+    answers: ["**important**"],
+    correct_msg: "Correct — double asterisks on each side give you bold.",
+    wrong_msg: "Not quite.",
+    reveal: "**important**"
+  },
+  {
+    prompt: "Write the Markdown for a bullet list with two items: <strong>HTML</strong> and <strong>CSS</strong>",
+    hint: "Hint: use - on separate lines, one item per line",
+    type: "textarea",
+    rows: 3,
+    answers: ["- HTML\n- CSS", "- HTML\n- CSS\n", "-HTML\n-CSS"],
+    normalize: true,
+    correct_msg: "Correct — a hyphen and space before each item creates a bullet list.",
+    wrong_msg: "Not quite. Each item goes on its own line starting with -",
+    reveal: "- HTML\n- CSS"
+  },
+  {
+    prompt: "Write inline code formatting for the word: <strong>print()</strong>",
+    hint: "Hint: wrap it in backtick characters `",
+    type: "input",
+    answers: ["`print()`"],
+    correct_msg: "Correct — backticks format text as inline code.",
+    wrong_msg: "Not quite.",
+    reveal: "`print()`"
+  },
+  {
+    prompt: "Create a link. The text should say <strong>Visit GitHub</strong> and it should link to <strong>https://github.com</strong>",
+    hint: "Hint: [text](url)",
+    type: "input",
+    answers: ["[Visit GitHub](https://github.com)"],
+    correct_msg: "Correct — square brackets hold the link text, round brackets hold the URL.",
+    wrong_msg: "Not quite. Check your brackets — [text](url).",
+    reveal: "[Visit GitHub](https://github.com)"
+  },
+  {
+    prompt: "Write a second-level section heading called <strong>Installation</strong>",
+    hint: "Hint: use ## followed by a space",
+    type: "input",
+    answers: ["## Installation"],
+    correct_msg: "Correct — ## creates an h2 heading for a section.",
+    wrong_msg: "Not quite.",
+    reveal: "## Installation"
+  },
+  {
+    prompt: "Write the opening line of a fenced code block for <strong>python</strong> code.",
+    hint: "Hint: three backticks followed by the language name",
+    type: "input",
+    answers: ["```python", "``` python"],
+    correct_msg: "Correct — three backticks plus the language name opens a fenced code block.",
+    wrong_msg: "Not quite. Use three backticks then python with no space between them.",
+    reveal: "```python"
+  },
+  {
+    prompt: "Turn this into a blockquote: <strong>Built for students</strong>",
+    hint: "Hint: use > at the start of the line",
+    type: "input",
+    answers: ["> Built for students"],
+    correct_msg: "Correct — > at the start of a line creates a blockquote.",
+    wrong_msg: "Not quite.",
+    reveal: "> Built for students"
+  },
+  {
+    prompt: "Write the Markdown to insert an image. The alt text should be <strong>Project screenshot</strong>. The image file is called <strong>screen_capture.png</strong> and it is inside a folder called <strong>images</strong>.",
+    hint: "Hint: like a link but starts with ! — ![alt text](folder/filename). Use a forward slash between the folder and file name.",
+    type: "input",
+    answers: ["![Project screenshot](images/screen_capture.png)"],
+    correct_msg: "Correct — the path images/screen_capture.png tells GitHub where to find the file, and the ! displays it as an image.",
+    wrong_msg: "Not quite. Check the full path is images/screen_capture.png and the alt text matches exactly.",
+    reveal: "![Project screenshot](images/screen_capture.png)"
+  },
+  {
+    prompt: "Write a table with one header row and one data row. Headers: <strong>Name</strong> and <strong>Age</strong>. Data: <strong>Alice</strong> and <strong>21</strong>",
+    hint: "Hint: use | to separate columns. Row 1 is headers, row 2 is the separator (|---|---|), row 3 is data.",
+    type: "textarea",
+    rows: 4,
+    answers: [
+      "| Name | Age |\n|---|---|\n| Alice | 21 |",
+      "| Name | Age |\n| --- | --- |\n| Alice | 21 |",
+      "| Name | Age |\n|-----|-----|\n| Alice | 21 |",
+      "| Name | Age |\n| --- | --- |\n| Alice | 21 |\n"
+    ],
+    normalize: true,
+    correct_msg: "Correct — each row is a line of pipe-separated values, with a separator row of dashes between the headers and data.",
+    wrong_msg: "Not quite. You need three rows: headers, a |---|---| separator, then data.",
+    reveal: "| Name | Age |\n|---|---|\n| Alice | 21 |"
+  },
+  {
+    prompt: "Make the word <strong>optional</strong> appear in italic. Type the full Markdown for it.",
+    hint: "Hint: wrap the word in single asterisks",
+    type: "input",
+    answers: ["*optional*", "_optional_"],
+    correct_msg: "Correct — single asterisks (or underscores) on each side give you italic.",
+    wrong_msg: "Not quite. Use a single * on each side of the word.",
+    reveal: "*optional*"
+  },
+  {
+    prompt: "Apply strikethrough to the word <strong>deprecated</strong>. Type the full Markdown for it.",
+    hint: "Hint: wrap the word in double tildes ~~",
+    type: "input",
+    answers: ["~~deprecated~~"],
+    correct_msg: "Correct — double tildes on each side render as strikethrough on GitHub.",
+    wrong_msg: "Not quite. Use ~~ on each side of the word.",
+    reveal: "~~deprecated~~"
+  }
+];
+
+function normalise(str) {
+  return str.trim().replace(/\r\n/g, '\n').replace(/\n+$/, '');
+}
+
+function buildExercises() {
+  const container = document.getElementById('exercises');
+  exercises.forEach((ex, i) => {
+    const div = document.createElement('div');
+    div.className = 'ex-card';
+    div.id = 'ex-' + i;
+
+    const num = `<span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--accent);background:rgba(88,166,255,0.1);border:1px solid rgba(88,166,255,0.25);border-radius:4px;padding:0.15rem 0.5rem;margin-right:0.6rem;">Q${i+1}</span>`;
+
+    let inputHtml = '';
+    if (ex.type === 'textarea') {
+      inputHtml = `<textarea class="ex-textarea" id="inp-${i}" rows="${ex.rows || 4}" placeholder="Type your answer here…" spellcheck="false"></textarea>
+        <div style="margin-top:0.5rem;"><button class="ex-btn" onclick="checkAnswer(${i})">Check</button></div>`;
+    } else {
+      inputHtml = `<div class="ex-row">
+        <input class="ex-input" id="inp-${i}" type="text" placeholder="Type your answer here…" spellcheck="false" autocomplete="off" onkeydown="if(event.key==='Enter')checkAnswer(${i})">
+        <button class="ex-btn" id="btn-${i}" onclick="checkAnswer(${i})">Check</button>
+      </div>`;
+    }
+
+    div.innerHTML = `
+      <div class="ex-prompt">${num}${ex.prompt}</div>
+      <div class="ex-hint">${ex.hint}</div>
+      ${inputHtml}
+      <div class="ex-feedback" id="fb-${i}"></div>
+    `;
+    container.appendChild(div);
+  });
+
+  // Add score button after all exercises
+  const btn = document.createElement('button');
+  btn.className = 'check-all-btn';
+  btn.id = 'score-btn';
+  btn.textContent = '→ See my score';
+  btn.onclick = showScore;
+  container.after(btn);
+}
+
+function checkAnswer(i) {
+  const ex = exercises[i];
+  const input = document.getElementById('inp-' + i);
+  const fb = document.getElementById('fb-' + i);
+  const btn = document.getElementById('btn-' + i);
+
+  let userVal = input.value;
+  let answers = ex.answers;
+
+  if (ex.normalize) {
+    userVal = normalise(userVal);
+    answers = answers.map(normalise);
+  } else {
+    userVal = userVal.trim();
+    answers = answers.map(a => a.trim());
+  }
+
+  const isCorrect = answers.includes(userVal);
+
+  input.className = input.tagName === 'TEXTAREA' ? 'ex-textarea' : 'ex-input';
+  input.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  if (btn) btn.disabled = true;
+  input.readOnly = true;
+
+  if (isCorrect) {
+    fb.className = 'ex-feedback correct';
+    fb.innerHTML = `✓ ${ex.correct_msg}`;
+  } else {
+    fb.className = 'ex-feedback wrong';
+    fb.innerHTML = `✗ ${ex.wrong_msg} <span class="ex-reveal">Answer: ${escapeHtml(ex.reveal)}</span>`;
+  }
+}
+
+function showScore() {
+  let score = 0;
+  exercises.forEach((ex, i) => {
+    const input = document.getElementById('inp-' + i);
+    if (input && input.classList.contains('correct')) score++;
+    // auto-check any unanswered
+    if (input && !input.readOnly) checkAnswer(i);
+  });
+  // recount after auto-check
+  score = 0;
+  exercises.forEach((ex, i) => {
+    const input = document.getElementById('inp-' + i);
+    if (input && input.classList.contains('correct')) score++;
+  });
+
+  const bar = document.getElementById('score-bar');
+  const txt = document.getElementById('score-text');
+  const msg = document.getElementById('score-msg');
+  const total = exercises.length;
+  bar.style.display = 'block';
+  txt.textContent = `${score} / ${total}`;
+
+  if (score === total) {
+    msg.textContent = 'Full marks — you know your Markdown.';
+    txt.style.color = 'var(--accent2)';
+  } else if (score >= total * 0.75) {
+    msg.textContent = 'Good work. Review the ones you missed and try again.';
+    txt.style.color = 'var(--accent)';
+  } else {
+    msg.textContent = 'Keep practising — go back through the examples above.';
+    txt.style.color = 'var(--accent3)';
+  }
+
+  document.getElementById('score-btn').style.display = 'none';
+  bar.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetAll() {
+  exercises.forEach((ex, i) => {
+    const input = document.getElementById('inp-' + i);
+    if (input) {
+      input.value = '';
+      input.className = input.tagName === 'TEXTAREA' ? 'ex-textarea' : 'ex-input';
+      input.readOnly = false;
+    }
+    const fb = document.getElementById('fb-' + i);
+    if (fb) { fb.className = 'ex-feedback'; fb.innerHTML = ''; }
+    const btn = document.getElementById('btn-' + i);
+    if (btn) btn.disabled = false;
+  });
+  document.getElementById('score-bar').style.display = 'none';
+  document.getElementById('score-btn').style.display = 'block';
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+const templateText = `# Project Name
+
+A one-sentence description of what your project does.
+
+## Overview
+
+Explain the purpose of the project. What problem does it solve?
+Who is it for?
+
+## Features
+
+- Feature one
+- Feature two
+- Feature three
+
+## How to Run
+
+1. Clone the repository:
+
+\`\`\`bash
+git clone https://github.com/your-username/your-repo.git
+\`\`\`
+
+2. Install dependencies:
+
+\`\`\`bash
+pip install -r requirements.txt
+\`\`\`
+
+3. Run the program:
+
+\`\`\`bash
+python main.py
+\`\`\`
+
+## Technologies Used
+
+| Technology | Purpose          |
+|-----------|------------------|
+| Python     | Core logic        |
+| Flask      | Web framework     |
+
+## Author
+
+[Your Name](https://github.com/your-username)`;
+
+function copyTemplate() {
+  navigator.clipboard.writeText(templateText).then(() => {
+    const btn = document.getElementById('tmpl-copy-btn');
+    btn.textContent = '✓ Copied';
+    btn.style.color = 'var(--accent2)';
+    btn.style.borderColor = 'rgba(63,185,80,0.3)';
+    btn.style.background = 'rgba(63,185,80,0.1)';
+    setTimeout(() => {
+      btn.textContent = '⎘ Copy template';
+      btn.style.color = 'var(--accent)';
+      btn.style.borderColor = 'rgba(88,166,255,0.3)';
+      btn.style.background = 'rgba(88,166,255,0.1)';
+    }, 2000);
+  });
+}
+
+let previewOpen = false;
+function toggleTemplatePreview() {
+  const panel = document.getElementById('tmpl-preview');
+  const btn = document.getElementById('tmpl-preview-btn');
+  previewOpen = !previewOpen;
+  panel.style.display = previewOpen ? 'block' : 'none';
+  btn.textContent = previewOpen ? '▼ Hide preview' : '▶ Show preview';
+  if (previewOpen) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+buildExercises();
+</script>
+
+</body>
+</html>

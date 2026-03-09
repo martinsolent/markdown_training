@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Further Reading and Resources — Markdown Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #f78166;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --tag-bg: #1f2937;
+    --code-bg: #1c2128;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(88,166,255,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .header-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent2);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  header h1 {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  header h1 span { color: var(--accent); }
+
+  header p {
+    margin-top: 0.75rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* BACK LINK */
+  .back-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.6rem 2rem;
+    text-align: center;
+  }
+
+  .back-bar a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+
+  .back-bar a:hover { text-decoration: underline; }
+
+  /* LAYOUT */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 3rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    background: rgba(88,166,255,0.1);
+    border: 1px solid rgba(88,166,255,0.25);
+    border-radius: 4px;
+    padding: 0.15rem 0.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* RESOURCE CARD */
+  .resource-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.35rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .resource-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  .resource-card .resource-url {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .resource-card .resource-url a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(88,166,255,0.3);
+  }
+
+  .resource-card .resource-url a:hover { border-bottom-color: var(--accent); }
+
+  .resource-card p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .resource-card p:last-child { margin-bottom: 0; }
+
+  .resource-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0.75rem;
+  }
+
+  .resource-card ul li {
+    font-size: 0.88rem;
+    color: var(--muted);
+    padding: 0.2rem 0 0.2rem 1.1rem;
+    position: relative;
+  }
+
+  .resource-card ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent2);
+    font-size: 0.75rem;
+  }
+
+  .resource-card ul li strong { color: var(--text); }
+
+  /* EXTENSION CARD */
+  .ext-card {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .ext-card h4 {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .ext-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--accent2);
+    background: rgba(63,185,80,0.1);
+    border: 1px solid rgba(63,185,80,0.25);
+    border-radius: 20px;
+    padding: 0.1rem 0.45rem;
+  }
+
+  .ext-card p {
+    font-size: 0.87rem;
+    color: var(--muted);
+  }
+
+  /* SHORTCUT TAG */
+  .kbd {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    color: var(--text);
+  }
+
+  /* TIP BOX */
+  .tip {
+    background: rgba(63,185,80,0.07);
+    border: 1px solid rgba(63,185,80,0.2);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.87rem;
+    color: #8dd89e;
+    margin-bottom: 1rem;
+  }
+
+  .tip strong { color: var(--accent2); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-label">&#9632; First-Year Computing — GitHub Skills</div>
+  <h1>Further Reading<br><span>and Resources</span></h1>
+  <p>Extra support to help you develop your Markdown skills beyond the guide.</p>
+</header>
+
+<div class="back-bar">
+  <a href="markdown-guide.html">← Back to the Markdown Guide</a>
+</div>
+
+<div class="container">
+
+  <!-- SECTION 1: REFERENCE SITES -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Reference Sites</h2>
+    </div>
+
+    <div class="resource-card">
+      <h3>Daring Fireball – Markdown Basics</h3>
+      <div class="resource-url"><a href="https://daringfireball.net/projects/markdown/basics" target="_blank">https://daringfireball.net/projects/markdown/basics</a></div>
+      <p>This is the original reference written by John Gruber, the creator of Markdown. It gives a clear, concise introduction to the core syntax with before-and-after examples showing what you type alongside the HTML it produces. It covers paragraphs, headings, blockquotes, phrase emphasis (bold and italic), ordered and unordered lists, links, images, and inline code.</p>
+      <p>Worth bookmarking as a reliable, no-frills reference that covers everything you need at this stage.</p>
+    </div>
+
+    <div class="resource-card">
+      <h3>The Markdown Guide</h3>
+      <div class="resource-url"><a href="https://www.markdownguide.org/" target="_blank">https://www.markdownguide.org/</a></div>
+      <p>A free, open-source reference site that covers Markdown from beginner to advanced level. It is organised into clear sections:</p>
+      <ul>
+        <li><strong>Getting Started</strong> — a gentle introduction for anyone new to Markdown</li>
+        <li><strong>Basic Syntax</strong> — covers all the core elements you will use day to day</li>
+        <li><strong>Extended Syntax</strong> — goes further with tables, fenced code blocks, footnotes, and more</li>
+        <li><strong>Cheat Sheet</strong> — a single-page summary you can refer to when writing</li>
+        <li><strong>Tools</strong> — a directory of apps and editors that support Markdown, including VS Code</li>
+      </ul>
+      <p>It is well maintained and written in plain language, making it a practical first stop when you need to check a syntax rule quickly.</p>
+    </div>
+
+    <div class="resource-card">
+      <h3>Adam Pritchard's Markdown Cheatsheet</h3>
+      <div class="resource-url"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet</a></div>
+      <p>A widely used community reference that covers Markdown with rendered examples for every element. It includes everything in the basic syntax plus several GitHub-specific features, including:</p>
+      <ul>
+        <li>All six heading levels</li>
+        <li>Bold, italic, strikethrough, and combined emphasis</li>
+        <li>Ordered and unordered lists, including nested lists</li>
+        <li>Inline and fenced code blocks with syntax highlighting</li>
+        <li>Tables with column alignment</li>
+        <li>Blockquotes and horizontal rules</li>
+        <li>Links, images, and footnotes</li>
+      </ul>
+      <p>A practical reference to keep open in a browser tab while writing your README files.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 2: VS CODE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>VS Code Extensions for Markdown</h2>
+    </div>
+
+    <div class="tip">
+      <strong>Built-in support:</strong> VS Code includes Markdown preview without any extensions. Press <span class="kbd">Ctrl+Shift+V</span> to open a preview, or <span class="kbd">Ctrl+K V</span> to split the editor and see your rendered output alongside your code.
+    </div>
+
+    <div class="ext-card">
+      <h4>Markdown All in One <span class="ext-badge">free</span></h4>
+      <p>Adds keyboard shortcuts for common formatting tasks such as bold, italic, and headings. It also generates and auto-updates a table of contents based on your headings, formats tables automatically, and opens a preview panel.</p>
+    </div>
+
+    <div class="ext-card">
+      <h4>Markdown Preview Enhanced <span class="ext-badge">free</span></h4>
+      <p>Extends the default preview with additional features including support for diagrams, mathematical notation, and export to PDF or HTML. Useful if your projects grow beyond simple README files.</p>
+    </div>
+
+    <div class="ext-card">
+      <h4>markdownlint <span class="ext-badge">free</span></h4>
+      <p>Checks your Markdown for style and formatting errors as you type, underlining problems in the editor. It flags common mistakes such as inconsistent heading levels, trailing spaces, and missing blank lines around headings. Useful for developing good habits early.</p>
+    </div>
+
+    <div class="ext-card">
+      <h4>Markdown Preview GitHub Styling <span class="ext-badge">free</span></h4>
+      <p>Changes the VS Code preview so it matches the way GitHub renders Markdown. What you see in VS Code will be closer to what your repository visitors see.</p>
+    </div>
+
+    <div class="ext-card">
+      <h4>Prettier – Code Formatter <span class="ext-badge">free</span></h4>
+      <p>Automatically formats your Markdown files on save, handling indentation, line length, and spacing consistently.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 3: STANDALONE EDITORS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Standalone Markdown Editors</h2>
+    </div>
+
+    <p style="color:var(--muted); font-size:0.9rem; margin-bottom:1rem;">If you want to write Markdown outside of VS Code, these two tools are worth knowing about.</p>
+
+    <div class="resource-card">
+      <h3><a href="http://markdownpad.com/" target="_blank" style="color:var(--text); text-decoration:none; border-bottom:1px solid rgba(230,237,243,0.2);">MarkdownPad</a> <span style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--muted); font-weight:400;">free · Windows</span></h3>
+      <p>A desktop editor with a real-time HTML preview panel so you see the rendered output as you type.</p>
+      <ul>
+        <li>Real-time HTML preview</li>
+        <li>Customisable themes and CSS</li>
+        <li>Export to HTML and PDF</li>
+        <li>Pro version adds tables and auto-save</li>
+      </ul>
+    </div>
+
+    <div class="resource-card">
+      <h3><a href="https://stackedit.io/" target="_blank" style="color:var(--text); text-decoration:none; border-bottom:1px solid rgba(230,237,243,0.2);">StackEdit</a> <span style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--muted); font-weight:400;">free · browser-based</span></h3>
+      <p>A browser-based Markdown editor with a live preview that works in any browser with no installation required.</p>
+      <ul>
+        <li>Live preview in the browser</li>
+        <li>Sync with Google Drive, Dropbox, and GitHub</li>
+        <li>Supports LaTeX, UML diagrams, and publishing to blogs</li>
+        <li>Works offline after the initial load</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <a href="markdown-guide.html">← Back to the Markdown Guide</a> &nbsp;·&nbsp; Markdown Guide &nbsp;·&nbsp; First-Year Computing
+</footer>
+
+</body>
+</html>
